@@ -1,0 +1,50 @@
+body{
+    background-color:white;
+    margin: 0px;
+}
+
+header{
+    margin: 0px;
+}
+#titulo{
+    font-family: monospace;
+    margin-top: 0px;
+    text-align: center;
+    background-color: white;
+}
+
+#nombre{
+    text-shadow: 0px 3px 3px rgba(0,0,0,0.2);
+}
+
+
+section{
+    margin-left: 40px;
+}
+
+.cajita{
+    box-shadow: 0px 8px 8px rgba(0,0,0,0.2);
+    background-color: whitesmoke;
+    border-radius: 4px;
+    margin: 15px;
+    border-left: solid blue 3px;
+    display: flexbox;
+}
+
+.titulos{
+    margin-left: 15px;
+}
+
+.parrafos{
+    margin-left: 30px;
+}
+
+.fuente{
+    margin: 15px;
+    font-style: italic;
+    font-size: 13px;
+}
+
+#res{
+    text-decoration: underline;
+}
