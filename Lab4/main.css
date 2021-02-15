@@ -5,6 +5,7 @@ body{
 
 button{
     padding: 1%;
+    border-radius: 4px;
     border: solid blue 1px;
     background-color: white;
     color: blue;
