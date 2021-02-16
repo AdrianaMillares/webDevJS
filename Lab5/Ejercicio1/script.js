@@ -2,6 +2,7 @@
 const formulario = document.getElementById("forms");
 formulario.onsubmit = function(){validar()};
 
+
 function validar(){
 
 let c1 = document.getElementById("passwd").value;

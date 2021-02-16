@@ -14,7 +14,7 @@ function total(){
     else if(p1 == 0 && p2 == 0 && p3 ==0){
         alert("Cantidad invalida");
     }
-    else{
+    else{    
     let iva = 0;
     let suma = 0;
     document.write('<p>Total tacos de tripa: </p>' + (p1*12) + '<br><p>Total coca cola: </p>' + ((p2*14)) + '<br><p>Total agua de lima: </p>' + (p3*15));
