@@ -1,26 +1,46 @@
-// Funciones
-
-//Funcion 1
-function problema1(){
-    const tam = window.prompt('inserte el tamaño de su arreglo');
-	let arreglo = [];
-    let promedio = 0;
-
-	for(let i = 1; i <= tam; i++){
-        arreglo[i] = window.prompt('inserte el numero ' + i +  'de su arreglo');
-        promedio = promedio + arreglo[i];
+function promedio(list){
+    let sum = 0;
+    for(let i of list){
+        sum += i;
     }
-    promedio = promedio / tam;    
+    return sum/list.length;
 }
 
+function text(str){
+    const filesystem = require('fs');
+    filesystem.writeFileSync('text.txt', str);
+    return true;
+}
+
+function max(list){
+    let m = list[0];
+    for(let i of list){
+        if(i > m){
+            m = i;
+        }
+    }
+    return m;
+}
+
+const arreglo = [46, 75, 98, 23, 28, 74, 7, 79, 35, 39, 48, 62];
+
+console.log(promedio(arreglo));
+console.log(text("Hola Mundo"));
+console.log(max(arreglo));
+
 // server .js
+
+let file;
+const fs = require("fs");
 
 'use strict';
 const http = require('http');
 
 const server = http.createServer(function(req, res){
-    res.writeHead(200, {'content-type': 'text/plain'});
-    res.end('Pregunta 1' + problema1());
+    fs.readFile('../Lab5/Ejercicio2/index.html', function(error, data){ 
+        res.write(data);
+        return res.end();
+     });
 });
 
 server.listen(8000);
