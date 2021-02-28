@@ -1,0 +1,22 @@
+{
+  "name": "a01705674",
+  "version": "1.0.0",
+  "description": "**Construcción de software y toma de decisiones**",
+  "main": "index.js",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://AdriMillares@bitbucket.org/AdriMillares/a01705674.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/AdriMillares/a01705674#readme"
+}
