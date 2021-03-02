@@ -1,9 +1,12 @@
 
 'use strict';
+const { resolveSoa } = require('dns');
 const fs = require("fs");
 const path = require("path");
 const http = require('http');
-const { response } = require("express");
+const { res } = require("express");
+
+const peliculas = ['Slumdog millionaire', 'How to lose a guy in 10 days', 'Cementerio de elefantes'];
 
 const server = http.createServer(function(req, res){
      if(req.url === "/"){
@@ -15,8 +18,37 @@ const server = http.createServer(function(req, res){
      else if(req.url === "/peliculas" || req.url === "/Peliculas"){
         res.write("<html>");
         res.write("<head><title>Peliculas</title></head>");
-        res.write("<body><h1>Peliculas</h1><ul><li>Slumdog millionaire</li><li>How to lose a guy in 10 days</li><li>Cementerio de elefantes</li></ul></body>");
+        res.write("<body>");
+        res.write("<h1>Peliculas</h1>");
+        res.write("<ul>");
+        peliculas.forEach(pelicula => {
+            response.write("<li>");
+            response.write(pelicula);
+            response.write("</li>");
+        });
+        res.write("</ul></body>")
         res.write("</html>");
+    }
+    else if (req.url == "/AgregarPelicula" && req.method == "GET") {
+        res.write("<body><h1>Agregar pelicula</h1></body>");
+        res.write('<form action="nuevaPelicula" method="POST"><input type="text" name="nombre"><input type="submit" value="Agregar pelicula a la lista"></form>');
+        res.write("</html>");
+    }
+    else if(req.url == "/AgregarPelicula" && req.method == "POST"){
+        const datos = [];
+        req.on('data', (dato) => {
+            datos.push(dato);
+        });
+        return req.on('end', () => {
+            const datoFinal = Buffer.concat(datos).toString();
+            const nuevaPelicula = datoFinal.split('=')[1];
+            peliculas.push(nuevaPelicula);
+            res.writeHead(301,{Location:'/peliculas'});
+            return res.end();
+        });    
+            res.setHeader('Content-Type', 'text/html');
+            res.write("<html>");
+            res.write("<head><meta charset='UTF-8'><title>Agregar Pelicula</title></head>");
     }
     else if(req.url === "/series" || req.url === "/Series"){
         res.write("<html>");
