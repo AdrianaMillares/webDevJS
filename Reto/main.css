@@ -1,0 +1,24 @@
+body{
+  background-color: whitesmoke;
+}
+
+img{
+  margin-top: 1em;
+  position: relative;
+  width: 5em;
+  height: 3em;
+}
+div{
+  position: absolute;
+  margin: auto;
+  border-right: solid black 0.01em;
+  width: 30%;
+  box-sizing: content-box;
+  min-height: 100%;
+}
+ul{
+  padding: 10%;
+}
+li{
+  padding: 10%;
+}

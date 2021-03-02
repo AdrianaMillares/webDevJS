@@ -21,7 +21,7 @@ const server = http.createServer(function(req, res){
     else if(req.url === "/series" || req.url === "/Series"){
         res.write("<html>");
         res.write("<head><title>Series</title></head>");
-        res.write("<body><h1>Series</h1><ul><li>You Me Her</li><li>Avatar</li><li>How I Met Your Mother</li></ul></body>");
+        res.write("<body><h1>Series</h1><ul><li>Friends</li><li>Avatar</li><li>How I Met Your Mother</li></ul></body>");
         res.write("</html>");
     }
     else if(req.url === "/musica" || req.url === "/Musica"){
