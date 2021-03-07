@@ -1,10 +1,21 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 
 //Middleware
+app.use(bodyParser.urlencoded({extended: false}));
 app.use((request, response, next) => {
     console.log('Middleware!');
     next(); //Le permite a la petición avanzar hacia el siguiente middleware
+});
+
+app.use('/alguna-ruta', (request, response, next) => {
+    console.log(request.body);
+});
+
+//Rutas 
+app.use('/respuesta', (request, response, next) => {
+    response.send('<h1>Respuesta</h1>'); 
 });
 
 // use recibe 3 parametros, req, res, next
