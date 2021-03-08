@@ -32,12 +32,7 @@ router.post("/AgregarPelicula", (request, response, next) => {
 });
 
 router.use("/Peliculas", (request, response, next) => {
-  let html = "<h1>Peliculas</h1><ul>";
-  peliculas.forEach((pelicula) => {
-    html += "<li>" + pelicula + "</li>";
-  });
-  html += "</ul>";
-  response.send(html);
+  response.render('peliculas', {lista_peliculas: peliculas });
 });
 
 
