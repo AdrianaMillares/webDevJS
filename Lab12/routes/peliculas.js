@@ -13,7 +13,7 @@ const peliculas = [
   "How to lose a guy in 10 days",
   "Cementerio de elefantes",
 ];
- 
+
 
 peliculas.forEach((pelicula) => {
   fs.appendFileSync("pelicula.txt", peliculas + "\n");
