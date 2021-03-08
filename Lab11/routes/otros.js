@@ -1,9 +1,12 @@
 const express = require("express");
 const router = express.Router();
+const bodyParser = require('body-parser');
 
-router.get('/musica', (request, response, next) => {
+router.use(bodyParser.urlencoded({ extended: false }));
+
+router.use('/Musica', (request, response, next) => {
     let html = '<h1>Musica</h1>';
-    html += '<ul><li>Yguea - Los babasonicos</li>';
+    html += '<ul><li>Yegua - Los babasonicos</li>';
     html += '<li>Cuando pase el temblor - Soda estereo</li>';
     html += '<li>Scrawny - Wallows</li>';
     html += '<li>Flowers in your hair -  the lumineneers</li>';
@@ -11,7 +14,7 @@ router.get('/musica', (request, response, next) => {
     response.send(html);
 });
 
-router.use( '/series', (request, response, next) => {
+router.use( '/Series', (request, response, next) => {
     let html = '<h1>Series</h1>';
     html += "<ul><li>The 100</li>";
     html += "<li>How I met your mother</li>";
