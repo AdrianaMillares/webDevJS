@@ -1,12 +1,12 @@
 let file;
 const fs = require("fs");
-
+ const peliculas = [
+   "Slumdog millionaire",
+   "How to lose a guy in 10 days",
+   "Cementerio de elefantes",
+ ];
+ 
 const requestHandler = (req, res)=>{
-    const peliculas = [
-  "Slumdog millionaire",
-  "How to lose a guy in 10 days",
-  "Cementerio de elefantes",
-];
 if (req.url === "/") {
   fs.readFile("../Lab10/index.html", function (error, data) {
     res.write(data);
