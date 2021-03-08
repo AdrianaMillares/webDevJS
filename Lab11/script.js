@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const { response } = require('express');
 const app = express();
 
 //Middleware
@@ -25,5 +26,7 @@ app.use((request, response, next) => {
     console.log('¡Hola mundo!');
     response.send('¡Hola mundo!'); //Manda la respuesta
 });
-
+// redireccion 
+// response.statusCode = 302;
+// response.setHeader("Location", "/ruta");
 app.listen(3000);
