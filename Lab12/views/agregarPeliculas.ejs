@@ -5,22 +5,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Peliculas</title>
     <link rel="stylesheet" href="main.css" />
-    <title>Peliculas</title>
 </head>
 
 <body>
     <h1>Adriana Millares</h1>
     <div>
-        <h3>Peliculas</h3>
+        <h3>Agregar Peliculas</h3>
         <hr>
-
-        <% for(let pelicula of lista_peliculas){ %>
-            <li>
-                <%=pelicula %>
-            </li>
-            <% }; %>
-                </ul>
+        <form action="AgregarPelicula" method="POST"><label><strong>Ingrese el nombre de la pelicula</strong></label><br><br><input type="text" name="nombre"><br><br><input id="boton" type="submit"
+                value="Agregar una pelicula"></form>
     </div>
 </body>
 

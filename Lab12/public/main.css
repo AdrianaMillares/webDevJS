@@ -25,3 +25,17 @@ div{
 h3{
     text-align: center;
 }
+
+#boton{
+    display:block;
+    margin-left: auto;  
+    margin-right: auto;
+    padding: 1%;
+    border-color: rgb(70, 70, 241);
+    border-radius: 7%;
+    background-color: whitesmoke;
+}
+
+#boton:hover{
+    padding: 1.4%;
+}

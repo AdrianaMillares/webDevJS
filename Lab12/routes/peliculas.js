@@ -20,9 +20,7 @@ peliculas.forEach((pelicula) => {
 });
 
 router.get("/AgregarPelicula", (request, response, next) => {
-  response.send(
-    '<h1>Agregar pelicula</h1><form action="AgregarPelicula" method="POST"><input type="text" name="nombre"><input type="submit" value="Agregar una pelicula"></form>'
-  );
+  response.render('agregarPeliculas');
 });
 
 router.post("/AgregarPelicula", (request, response, next) => {
