@@ -1,0 +1,232 @@
+*Ejercicio 1*
+
+Eliminar tablas previamente creadas 
+ 
+	drop TABLE entregan
+	drop TABLE materiales
+	drop TABLE proyectos
+	drop TABLE Proveedores
+
+Crear tablas
+
+	- Materiales
+
+
+ 		IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Materiales')
+
+		DROP TABLE Materiales
+
+		CREATE TABLE Materiales
+		(
+  		  Clave numeric(5) not null,
+  		  Descripcion varchar(50),
+  		  Costo numeric (8,2)
+		)
+	
+	- Proveedores
+
+
+		IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Proveedores')
+		DROP TABLE Proveedores
+
+
+		CREATE TABLE Proveedores
+		(
+		  RFC char(13) not null,
+		  RazonSocial varchar(50)
+		)
+
+	- Proyectos
+
+
+		IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Proyectos')
+		DROP TABLE Proyectos
+
+		CREATE TABLE Proyectos
+		(
+		  Numero numeric(5) not null,
+		  Denominacion varchar(50)
+		)
+
+	- Entregan
+		
+		IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Entregan')
+		DROP TABLE Entregan
+
+		CREATE TABLE Entregan
+		(
+		  Clave numeric(5) not null,
+		  RFC char(13) not null,
+		  Numero numeric(5) not null,
+		  Fecha DateTime not null,
+		  Cantidad numeric (8,2)
+		)
+
+Carga de datos 
+
+	
+	- Materiales
+
+		BULK INSERT a1705674.a1705674.[Materiales]
+		   FROM 'e:\wwwroot\rcortese\materiales.csv'
+		   WITH
+		      (
+		         CODEPAGE = 'ACP',
+		         FIELDTERMINATOR = ',',
+		         ROWTERMINATOR = '\n'
+		      )
+
+	- Proyectos
+
+		BULK INSERT a1705674.a1705674.[Proyectos]
+		  FROM 'e:\wwwroot\rcortese\Proyectos.csv'
+		  WITH
+		  (
+		    CODEPAGE = 'ACP',
+		    FIELDTERMINATOR = ',',
+		    ROWTERMINATOR = '\n'
+		  )
+
+	- Proveedores
+ 
+		BULK INSERT a1705674.a1705674.[Proveedores]
+		  FROM 'e:\wwwroot\rcortese\Proveedores.csv'
+		  WITH
+		  (
+		    CODEPAGE = 'ACP',
+		    FIELDTERMINATOR = ',',
+		    ROWTERMINATOR = '\n'
+		  )
+
+	- Entregan	
+
+		SET DATEFORMAT dmy -- especificar formato de la fecha
+
+		BULK INSERT a1705674.a1705674.[Entregan]
+		  FROM 'e:\wwwroot\rcortese\Entregan.csv'
+		  WITH
+		  (
+		    CODEPAGE = 'ACP',
+		    FIELDTERMINATOR = ',',
+		    ROWTERMINATOR = '\n'
+		  )
+
+Visualizar las tablas y su contenido
+
+	  select* from Materiales
+  	  select* from Proveedores
+  	  select* from Proyectos
+	  select* from Entregan
+
+*Ejercicio 2*
+
+
+Agregar registro a Materiales
+
+	INSERT INTO Materiales values(1000, 'xxx', 1000)
+
+	Se crea una inconsistencia con el costo, ya que se visualiza con puntos suspensivos
+
+Eliminar registro de Materiales
+
+	Delete from Materiales where Clave = 1000 and Costo = 1000
+
+Definir Clave como llave primaria de Materiales 
+
+	ALTER TABLE Materiales add constraint llaveMateriales PRIMARY KEY (Clave)
+
+Volver a agregar registro a Materiales
+
+	INSERT INTO Materiales values(1000, 'xxx', 1000)
+
+	No pude agregarlo ya que me sale un error de clave duplicada
+
+Verificar si la llave tiene alguna restricción
+
+	sp_helpconstraint materiales
+	nos muestra el nombre del constraint y cual es la llave que en este caso es Clave
+
+Definir llaves primarias para Proveedores y Proyectos
+
+	- Proveedores 
+	
+		ALTER TABLE Proveedores add constraint llaveProveedores PRIMARY KEY (RFC)
+
+		  sp_helpconstraint Proveedores
+
+	- Proyectos
+
+  		ALTER TABLE Proyectos add constraint llaveProyectos PRIMARY KEY (Numero)
+
+		  sp_helpconstraint proyectos
+
+	- Entregan
+
+		ALTER TABLE Entregan add constraint llaveEntregan PRIMARY KEY NONCLUSTERED(Clave, RFC, Numero)
+
+*Ejercicio 3*
+
+Inserta datos en Entregan
+
+	 INSERT INTO entregan values (0, 'xxx', 0, '1-jan-02', 0) 
+
+         El sistema los ingresa como 0
+
+Eliminar de entregan
+
+	Delete from Entregan where Clave = 0
+
+Crear llave foranea
+
+  	ALTER TABLE entregan add constraint cfentreganclave
+  	foreign key (clave) references materiales(clave);
+
+	El sistema ya no acepta la nueva entrada, ya que no tiene consistencia con la clave de materiales
+
+	ALTER TABLE entregan add constraint cfentreganrfc
+  	foreign key (RFC) references proveedores(RFC);
+
+   	ALTER TABLE entregan add constraint cfentreganproyectos
+  	foreign key (numero) references Proyectos(numero);
+
+	Esta consulta nos dice que si se pueden repetir datos y que creamos una llave foranea
+
+*Ejercicio 4*
+
+Inserta este registro
+
+ 	INSERT INTO entregan values (1000, 'AAAA800101', 5000, GETDATE(), 0);
+	
+	Clave = 1000
+	RFC = 'AAAA800101'
+	Numero = 5000
+	Fecha = GETDATE() = La fecha del momento de ingresar los datos
+	Cantidad = 0 => No tiene sentido
+
+Elimina el registro que acabas de insertar 
+
+	Delete from Entregan where Cantidad = 0
+
+Para no permitir una cantidad igual a 0 utilizamos el siguiente constraint:
+
+	ALTER TABLE entregan add constraint cantidad check (cantidad > 0) ;
+
+Intenta insertar un registro con cantidad igual o menor que 0.
+
+	¿Cómo responde el sistema?
+		
+		Nos muestra un error		
+
+	¿Qué significa el mensaje?
+
+		Que no podemos ingresar el dato cantidad por que hay un conflicto con sus reglas
+
+*Integridad referencial*
+
+	La integridad referencial son un conjunto de reglas que evitan que un usuario pueda eliminar información por accidente,
+	o que la información que ingrese falte de sentido. Es por eso que algunos de los datos de nuestras tablas no son editables
+	o modificables por el usuario 
+
+Fuente: Mantener la integridad referencial en diagramas de modelo de base de datos. (2021). Microsoft.com. https://support.microsoft.com/es-es/office/mantener-la-integridad-referencial-en-diagramas-de-modelo-de-base-de-datos-80f60e10-1238-48f7-ab59-2bd31b2f047a
+
+‌
