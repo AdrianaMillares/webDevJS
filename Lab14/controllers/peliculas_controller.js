@@ -17,6 +17,7 @@ exports.postNuevaPelicula = (request, response, next) => {
     const nueva_pelicula = new Peliculas(request.body.nombre);
     nueva_pelicula.save();
     fs.appendFileSync("peliculas.txt", request.body.nombre + "\n");
+    response.setHeader('Set-Cookie', 'ultima_pelicula', nueva_pelicula);
     response.redirect("/peliculas");
 };
 
