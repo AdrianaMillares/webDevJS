@@ -1,15 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const bodyParser = require('body-parser');
+const musicaController = require('../controllers/musica_controller');
+const seriesController = require('../controllers/series_controller');
 
 router.use(bodyParser.urlencoded({ extended: false }));
 
-router.use('/Musica', (request, response, next) => {
-    response.render('musica');
-});
+router.use('/Musica', (musicaController.get));
 
-router.use( '/Series', (request, response, next) => {
-    response.render('series');
-});
+router.use( '/Series', (seriesController.get));
 
 module.exports = router;
