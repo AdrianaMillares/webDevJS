@@ -1,12 +1,19 @@
 const fs = require("fs");
 const Peliculas = require('../models/peliculas');
 
-Peliculas.fetchAll().forEach((pelicula) => {
-    fs.appendFileSync("pelicula.txt", Peliculas + "\n");
-});
-
 exports.get = (request, response, next) => {
-    response.render('peliculas', { lista_peliculas: Peliculas.fetchAll() });
+    Peliculas.fetchAll()
+    .then(([rows, fieldData]) => {
+        const pelicula = [];
+        for (let peliculas of rows) {
+            console.log(peliculas);
+            pelicula.push(peliculas);
+        }
+        response.render('peliculas', { lista_peliculas: pelicula});
+    })
+        .catch(err => {
+            console.log(err);
+        });
 };
 
 
@@ -23,6 +30,17 @@ exports.postNuevaPelicula = (request, response, next) => {
 };
 
 exports.getpelicula = (request, response, next) => {
+    Peliculas.fetchAll()
+        .then(([rows, fieldData]) => {
+            const pelicula = [];
+            for (let peliculas of rows) {
+                console.log(peliculas.Nombre);
+                pelicula.push(peliculas.Nombre);
+            }
+            response.render('peliculas', { lista_peliculas: pelicula });
+        })
+        .catch(err => {
+            console.log(err);
+        });
     console.log(request.cookies);
-    response.render('peliculas', { lista_peliculas: Peliculas.fetchAll() });
 };

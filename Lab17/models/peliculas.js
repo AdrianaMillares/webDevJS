@@ -1,8 +1,5 @@
-const peliculas = [
-    "Slumdog millionaire",
-    "How to lose a guy in 10 days",
-    "Cementerio de elefantes",
-];
+const db = require('../util/database');
+
 
 module.exports = class Peliculas {
 
@@ -17,7 +14,7 @@ module.exports = class Peliculas {
 
     //Este método servirá para devolver los objetos del almacenamiento persistente.
     static fetchAll() {
-        return peliculas;
+        return db.execute('SELECT* FROM pelicula')
     }
 
 }
