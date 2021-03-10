@@ -9,7 +9,9 @@ module.exports = class Peliculas {
     
     //Este método servirá para guardar de manera persistente el nuevo objeto. 
     save() {
-        peliculas.push(this.nombre);
+        return db.execute('INSERT INTO pelicula (Nombre) VALUES (?)',
+            [this.nombre]
+        );
     }
 
     //Este método servirá para devolver los objetos del almacenamiento persistente.
